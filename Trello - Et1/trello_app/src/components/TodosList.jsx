@@ -1,6 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux';
 import './TodoList.css';
+import Controls from "../components/items/ControItems.jsx";
 import { deleteTodoAction, toggleCompleteAction } from '../services/redux/actions';
 
 function filterTodos(todos = [], filter) {
@@ -34,6 +35,11 @@ function TodoList(props) {
             }`}
             key={todo.id}
           >
+   <div className="items">
+          <Controls/>
+          
+    </div>
+
             <div className='data'>
               <div className='text'>{todo.text}</div>
             </div>
