@@ -1,8 +1,34 @@
 import React from 'react'
 import { connect } from 'react-redux';
 import './TodoList.css';
-import Controls from "../components/items/ControItems.jsx";
-import { deleteTodoAction, toggleCompleteAction } from '../services/redux/actions';
+import { deleteTodoAction, toggleCompleteAction, createItemAction } from '../services/redux/actions';
+
+
+// function Controls(props) {
+//   const onKeyUpHandle = (e) => {
+//     console.log('key up', e.keyCode);
+
+//     if (e.keyCode === 13 && e.target.value.trim()) {
+//       // props.addTodo(e.target.value.trim());
+//       e.target.value = '';
+//     }
+//   };
+
+//   return (
+//       <div className='controls'>
+//         <input
+//           type='text'
+//           placeholder='add item here'
+//           onKeyUp={(e) => onKeyUpHandle(e)}
+//         />
+//       <button onClick={() => props.changeVisibility('Create')} >
+//           Create
+//       </button>
+
+//       </div>
+//   );
+// }
+
 
 function filterTodos(todos = [], filter) {
   console.log(filter);
@@ -26,7 +52,20 @@ function filterTodos(todos = [], filter) {
 }
 
 function TodoList(props) {
+    
+  const onKeyUpHandle = (e,id) => {
+    console.log('key up', e.keyCode);
+
+    if (e.keyCode === 13 && e.target.value.trim()) {
+      // props.addTodo(e.target.value.trim());
+        props.createItem(id, e.target.value.trim())
+      e.target.value = '';
+    }
+  };
+  
+  
     return (
+      
       <div className='todoList'>
         {filterTodos(props.todos,props.filter).map((todo) => (
           <div
@@ -35,9 +74,24 @@ function TodoList(props) {
             }`}
             key={todo.id}
           >
-   <div className="items">
-          <Controls/>
-          
+   <div className="Controlitems">
+        {/* <div className='text'>{todo.id}</div>
+          <button onClick={() => props.createItem(todo.id,'aaa')}>
+                {'create item'}
+          </button> */}
+        <div className='controls'>
+          <input 
+            type='text'
+            placeholder='add item here'
+            onKeyUp={(e) => onKeyUpHandle(e,todo.id)}
+          />
+        {/* <button onClick={() => props.createItem(todo.id,'Create')} > */}
+        <button onClick={() => props.createItem(todo.id, 'element123') } >
+            Create
+        </button>
+
+        </div>
+
     </div>
 
             <div className='data'>
@@ -49,7 +103,7 @@ function TodoList(props) {
               >
                 {!todo.completed ? ' complete' : '✔️ uncomplete'}
               </button>
-              <button onClick={() => props.delete(todo.id)}>
+              <button onClick={() => props.createItem(todo.id)}>
                 {'❌ delete'}
               </button>
             </div>
@@ -60,7 +114,6 @@ function TodoList(props) {
 
 }
 
-
 const mapStateToProps = (state) => ({
   todos: state.todos,
   filter: state.visibility,
@@ -69,6 +122,7 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = (dispatch) => ({
   toggleCompleted: toggleCompleteAction(dispatch),
   delete: (id) => deleteTodoAction(dispatch, id),
+  createItem : (id,text) => createItemAction(dispatch, id, text),
 });
 
 const connected = connect(

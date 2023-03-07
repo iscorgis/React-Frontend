@@ -6,6 +6,8 @@ import reportWebVitals from './reportWebVitals';
 
 import {Provider} from 'react-redux'
 import store from './services/redux/store.js';
+// import storeItem from './components/items/services/store.js';
+
 
 import * as serviceWorker from './serviceWorker';
 
