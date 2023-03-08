@@ -1,34 +1,8 @@
 import React from 'react'
 import { connect } from 'react-redux';
 import './TodoList.css';
+import ItemList from "./ItemList.jsx";
 import { deleteTodoAction, toggleCompleteAction, createItemAction } from '../services/redux/actions';
-
-
-// function Controls(props) {
-//   const onKeyUpHandle = (e) => {
-//     console.log('key up', e.keyCode);
-
-//     if (e.keyCode === 13 && e.target.value.trim()) {
-//       // props.addTodo(e.target.value.trim());
-//       e.target.value = '';
-//     }
-//   };
-
-//   return (
-//       <div className='controls'>
-//         <input
-//           type='text'
-//           placeholder='add item here'
-//           onKeyUp={(e) => onKeyUpHandle(e)}
-//         />
-//       <button onClick={() => props.changeVisibility('Create')} >
-//           Create
-//       </button>
-
-//       </div>
-//   );
-// }
-
 
 function filterTodos(todos = [], filter) {
   console.log(filter);
@@ -51,13 +25,31 @@ function filterTodos(todos = [], filter) {
 
 }
 
+function items(items = []) {
+   console.log(items);
+
+      {/* reptiles.map((reptile) => <li>{reptile}</li>); */}
+      // items.map((item) => {item})
+       {/* {todo.items.map(item => (
+                  <div key={item.id}>
+                      <p>{item.text}</p>
+                  </div>
+                ))} */}
+
+    return items.map((item) => <div className='todoList'><p>{item.iditem}</p> <p>{item.textItem}</p></div>)
+
+}
+
+
 function TodoList(props) {
-    
+  
+  let inputItemValue = ""
   const onKeyUpHandle = (e,id) => {
     console.log('key up', e.keyCode);
 
+    inputItemValue = e.target.value
+
     if (e.keyCode === 13 && e.target.value.trim()) {
-      // props.addTodo(e.target.value.trim());
         props.createItem(id, e.target.value.trim())
       e.target.value = '';
     }
@@ -74,25 +66,33 @@ function TodoList(props) {
             }`}
             key={todo.id}
           >
-   <div className="Controlitems">
-        {/* <div className='text'>{todo.id}</div>
-          <button onClick={() => props.createItem(todo.id,'aaa')}>
-                {'create item'}
-          </button> */}
-        <div className='controls'>
-          <input 
-            type='text'
-            placeholder='add item here'
-            onKeyUp={(e) => onKeyUpHandle(e,todo.id)}
-          />
-        {/* <button onClick={() => props.createItem(todo.id,'Create')} > */}
-        <button onClick={() => props.createItem(todo.id, 'element123') } >
-            Create
-        </button>
+          <div className="Controlitems">
+                <div className='controls'>
+                  <input 
+                    type='text'
+                    placeholder='add item here'
+                    onKeyUp={(e) => onKeyUpHandle(e,todo.id)}
+                  />
 
-        </div>
+                <button onClick={() => props.createItem(todo.id, inputItemValue) } >
+                    Create
+                </button>
+                  
+                </div>
 
-    </div>
+    
+
+                <div className="itemlist">
+                {items(todo.items)}
+                {/* {todo.items.map(item => (
+                  <div key={item.id}>
+                      <p>{item.text}</p>
+                  </div>
+                ))} */}
+                </div>  
+
+
+            </div>
 
             <div className='data'>
               <div className='text'>{todo.text}</div>
@@ -103,7 +103,7 @@ function TodoList(props) {
               >
                 {!todo.completed ? ' complete' : '✔️ uncomplete'}
               </button>
-              <button onClick={() => props.createItem(todo.id)}>
+              <button onClick={() => props.delete(todo.id)}>
                 {'❌ delete'}
               </button>
             </div>

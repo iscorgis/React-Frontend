@@ -46,22 +46,7 @@ function reducer(state = initialState, action) {
           },
         ),
       };
-      // return {
-      //   ...state,
-      //   todos: state.todos.map(
-      //     (todo) => {
-      //       console.log('aa',todo.id )
-      //       console.log('ab',action.id )
-      //       console.log('ac',action.payload)
-      //         if (todo.id === action.payload) {
-      //             // todo.completed = !todo.completed
-
-      //         }
-      //         return todo
-      //     },
-      //   ),
-      // };
-
+ 
     case 'ADD_TODO':
       return {
         ...state,

@@ -10,6 +10,18 @@ export const toggleCompleteAction = (dispatch) => (id) =>
     payload: id,
   });
 
+  export const deleteItemAction = (dispatch, id) =>
+  dispatch({
+    type: 'DELETE_ITEM',
+    payload: id,
+  });
+
+export const toggleCompleteItemAction = (dispatch) => (id) =>
+  dispatch({
+    type: 'TOGGLE_COMPLETEDITEM_TODO',
+    payload: id,
+  });
+
 
 export const createItemAction = (dispatch,id,text) =>
   dispatch({
