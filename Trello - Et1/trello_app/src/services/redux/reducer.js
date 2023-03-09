@@ -5,7 +5,7 @@ const initialState = {
       text: 'tarea demo 1',
       id: 1,
       completed: true,
-      items: [{idItem:1,textItem:'item demo 1'},{idItem:2,textItem:'item demo 2'}],
+      items: [{idItem:1,textItem:'item demo 1', itemState: 'uncompleted'},{idItem:2,textItem:'item demo 2',itemState: 'uncompleted'}],
     },
     {
       text: 'tarea demo 2',
@@ -64,6 +64,24 @@ function reducer(state = initialState, action) {
         ...state,
         todos: state.todos.filter(
           (todo) => todo.id !== action.payload,
+        ),
+      };
+    case 'DELETE_ITEM':
+      return {
+        ...state,
+        todos: state.todos.map(
+          (todo) => {
+            console.log('todoId',todo.id )
+            console.log('action todo id',action.todoid )
+            console.log('payload',action.payload )
+            console.log('item id',action.id)
+           
+                 if (todo.id === action.todoid) {
+                  const index = todo.items.indexOf(action.id);
+                  todo.items.splice(index,1);
+                 }
+              return todo
+          },
         ),
       };
     case 'TOGGLE_COMPLETED_TODO':

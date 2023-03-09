@@ -2,7 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux';
 import './TodoList.css';
 import ItemList from "./ItemList.jsx";
-import { deleteTodoAction, toggleCompleteAction, createItemAction } from '../services/redux/actions';
+import { deleteTodoAction, toggleCompleteAction, createItemAction,deleteItemAction, toggleCompleteItemAction } from '../services/redux/actions';
 
 function filterTodos(todos = [], filter) {
   console.log(filter);
@@ -25,7 +25,7 @@ function filterTodos(todos = [], filter) {
 
 }
 
-function items(items = []) {
+function items(items = [], props,todoid) {
    console.log(items);
 
       {/* reptiles.map((reptile) => <li>{reptile}</li>); */}
@@ -36,7 +36,23 @@ function items(items = []) {
                   </div>
                 ))} */}
 
-    return items.map((item) => <div className='todoList'><p>{item.iditem}</p> <p>{item.textItem}</p></div>)
+    return items.map((item) => 
+          <div className='itemList'>
+            {item.textItem}
+          
+            <div className='actions'>
+              <button
+                onClick={() => props.toggleItemCompleted(item.idItem,todoid)}
+              >
+                {!item.itemState ? ' complete' : '✔️ uncomplete'}
+              </button>
+              <button onClick={() => props.deleteItem(item.idItem,todoid)}>
+                {'❌ delete'}
+              </button>
+            </div>
+          
+          </div>
+          )
 
 }
 
@@ -83,7 +99,7 @@ function TodoList(props) {
     
 
                 <div className="itemlist">
-                {items(todo.items)}
+                {items(todo.items,props,todo.id)}
                 {/* {todo.items.map(item => (
                   <div key={item.id}>
                       <p>{item.text}</p>
@@ -123,6 +139,9 @@ const mapDispatchToProps = (dispatch) => ({
   toggleCompleted: toggleCompleteAction(dispatch),
   delete: (id) => deleteTodoAction(dispatch, id),
   createItem : (id,text) => createItemAction(dispatch, id, text),
+  deleteItem: (id, todoid) => deleteItemAction(dispatch, id, todoid),
+  toggleItemCompleted: (todoid)=> toggleCompleteItemAction(dispatch,todoid),
+
 });
 
 const connected = connect(
