@@ -22,6 +22,31 @@ const initialState = {
   ],
 };
 
+
+// function swapElement(array, indexA, moveType) {
+//   var len       = array.length;
+//   // var current   = array[i];
+//   // var previous  = array[(i+len-1)%len];
+//   // var next      = array[(i+1)%len];
+
+//   if (moveType == "pre") {
+//     var tmp = array[indexA];
+    
+//     array[indexA] = array[(i+len-1)%len];
+//     array[indexB] = tmp;
+//   }
+
+//   if (moveType == "post") {
+//     var tmp = array[indexA];
+    
+//     array[indexA] = array[(i+1)%len];
+//     array[indexB] = tmp;
+//   }
+
+
+// }
+
+
 function reducer(state = initialState, action) {
   console.log('main reducer. action:', action);
 

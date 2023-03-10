@@ -120,7 +120,7 @@ function TodoList(props) {
                 {!todo.completed ? ' complete' : '✔️ uncomplete'}
               </button>
               <button onClick={() => props.delete(todo.id)}>
-                {'❌ delete'}
+                {'❌ delete '}
               </button>
             </div>
           </div>

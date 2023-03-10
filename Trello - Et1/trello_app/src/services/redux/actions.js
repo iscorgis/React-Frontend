@@ -24,6 +24,19 @@ export const toggleCompleteItemAction = (dispatch) => (id, todoid) =>
     todoid: todoid,
   });
 
+export const toggleItemUpAction = (dispatch) => (id, todoid) =>
+  dispatch({
+    type: 'TOGGLE_UPITEM',
+    payload: id,
+    todoid: todoid,
+  });
+
+export const toggleItemDownAction = (dispatch) => (id, todoid) =>
+  dispatch({
+    type: 'TOGGLE_DOWNITEM',
+    payload: id,
+    todoid: todoid,
+  });
 
 export const createItemAction = (dispatch,id,text) =>
   dispatch({
