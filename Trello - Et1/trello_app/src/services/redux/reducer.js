@@ -23,28 +23,22 @@ const initialState = {
 };
 
 
-// function swapElement(array, indexA, moveType) {
-//   var len       = array.length;
-//   // var current   = array[i];
-//   // var previous  = array[(i+len-1)%len];
-//   // var next      = array[(i+1)%len];
+function item_swap(arr, old_index, new_index) {
+  while (old_index < 0) {
+      old_index += arr.length;
+  }
+  while (new_index < 0) {
+      new_index += arr.length;
+  }
+  if (new_index >= arr.length) {
+      var k = new_index - arr.length + 1;
+      while (k--) {
+          arr.push(undefined);
+      }
+  }
+  arr.splice(new_index, 0, arr.splice(old_index, 1)[0]);
 
-//   if (moveType == "pre") {
-//     var tmp = array[indexA];
-    
-//     array[indexA] = array[(i+len-1)%len];
-//     array[indexB] = tmp;
-//   }
-
-//   if (moveType == "post") {
-//     var tmp = array[indexA];
-    
-//     array[indexA] = array[(i+1)%len];
-//     array[indexB] = tmp;
-//   }
-
-
-// }
+};
 
 
 function reducer(state = initialState, action) {
@@ -121,6 +115,20 @@ function reducer(state = initialState, action) {
           },
         ),
       };
+      case 'TOGGLE_UPITEM':
+        return {
+          ...state,
+          todos: state.todos.map(
+            (todo) => {             
+                   if (todo.id === action.todoid) {
+                    const index = todo.items.indexOf(action.id);
+                    // todo.items.splice(index,1);
+                    item_swap(todo.items,action.id,action.id - 1 )
+                   }
+                return todo
+            },
+          ),
+        };
     case 'CHANGE_VISIBILITY':
       return {
         ...state,

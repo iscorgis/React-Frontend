@@ -74,7 +74,7 @@ function TodoList(props) {
   
     return (
       
-      <div className='todoList'>
+      <div className='flexTodoList'>
         {filterTodos(props.todos,props.filter).map((todo) => (
           <div
             className={`todo ${
