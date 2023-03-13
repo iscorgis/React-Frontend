@@ -17,7 +17,7 @@ function Controls(props) {
         <div className='controls'>
           <input
             type='text'
-            placeholder='add todo here'
+            placeholder='add a List here'
             onKeyUp={(e) => onKeyUpHandle(e)}
           />
         <button onClick={() => props.changeVisibility('Create')} >

@@ -17,21 +17,21 @@ export const toggleCompleteAction = (dispatch) => (id) =>
     todoid: todoid,
   });
 
-export const toggleCompleteItemAction = (dispatch) => (id, todoid) =>
+export const toggleCompleteItemAction = (dispatch, id, todoid) =>
   dispatch({
     type: 'TOGGLE_COMPLETEDITEM_TODO',
     payload: id,
     todoid: todoid,
   });
 
-export const toggleItemUpAction = (dispatch) => (id, todoid) =>
+export const toggleItemUpAction = (dispatch, id, todoid) =>
   dispatch({
     type: 'TOGGLE_UPITEM',
     payload: id,
     todoid: todoid,
   });
 
-export const toggleItemDownAction = (dispatch) => (id, todoid) =>
+export const toggleItemDownAction = (dispatch, id, todoid) =>
   dispatch({
     type: 'TOGGLE_DOWNITEM',
     payload: id,

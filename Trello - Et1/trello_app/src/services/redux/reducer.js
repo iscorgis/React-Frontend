@@ -4,8 +4,9 @@ const initialState = {
     {
       text: 'tarea demo 1',
       id: 1,
-      completed: true,
-      items: [{idItem:1,textItem:'item demo 1', itemState: 'uncompleted'},{idItem:2,textItem:'item demo 2',itemState: 'uncompleted'}],
+      completed: false,
+      // items: [{idItem:1,textItem:'item demo 1', itemState: 'complete'},{idItem:2,textItem:'item demo 2',itemState: 'complete'}],
+      items: [{idItem:1,textItem:'item demo 1', itemState: true},{idItem:2,textItem:'item demo 2',itemState: true}],
     },
     {
       text: 'tarea demo 2',
@@ -16,7 +17,7 @@ const initialState = {
     {
       text: 'tarea demo 3',
       id: 3,
-      completed: true,
+      completed: false,
       items: [],
     },
   ],
@@ -24,6 +25,9 @@ const initialState = {
 
 
 function item_swap(arr, old_index, new_index) {
+  console.log("array len", arr.length)
+  console.log("old_index", old_index)
+  console.log("new_index", new_index)
   while (old_index < 0) {
       old_index += arr.length;
   }
@@ -59,7 +63,7 @@ function reducer(state = initialState, action) {
             console.log('payload',action.payload )
            
                  if (todo.id === action.payload) {
-                  todo.items.push({idItem:action.idItem,textItem:action.text});
+                  todo.items.push({idItem:action.idItem,textItem:action.text,itemState:'False'});
                  }
               return todo
           },
@@ -115,6 +119,25 @@ function reducer(state = initialState, action) {
           },
         ),
       };
+      case 'TOGGLE_COMPLETEDITEM_TODO':
+        return {
+          ...state,
+          todos: state.todos.map(
+            (todo) => {             
+                   if (todo.id === action.todoid) {
+                    console.log('todoId',todo.id )
+                    console.log('action todo id',action.todoid )
+                    console.log('payload',action.payload )
+                    console.log('item id',action.id)
+                    const index = todo.items.indexOf(action.todoid);
+                    console.log('index #########' , index)
+                    console.log('value of itemstate', todo.items[index].itemState)
+                    // todo.items[0].itemState = !todo.items[0].itemState
+                   }
+                return todo
+            },
+          ),
+        };
       case 'TOGGLE_UPITEM':
         return {
           ...state,
@@ -123,12 +146,38 @@ function reducer(state = initialState, action) {
                    if (todo.id === action.todoid) {
                     const index = todo.items.indexOf(action.id);
                     // todo.items.splice(index,1);
-                    item_swap(todo.items,action.id,action.id - 1 )
+                    console.log('todoId',todo.id )
+                    console.log('action todo id',action.todoid )
+                    console.log('payload',action.payload )
+                    console.log('item id',action.id)
+                    console.log("todo", todo.id)
+                    console.log("todolength", todo.items.length)
+                    console.log("index", index)
+                    console.log("index-1", index-1)
+                    item_swap(todo.items,index,index-1 )
                    }
                 return todo
             },
           ),
         };
+        case 'TOGGLE_DOWNITEM':
+          return {
+            ...state,
+            todos: state.todos.map(
+              (todo) => {             
+                     if (todo.id === action.todoid) {
+                      const index = todo.items.indexOf(action.id);
+                      // todo.items.splice(index,1);
+                      console.log("ITEM DOWN  ", todo.id)
+                      console.log("todolength", todo.items.length)
+                      console.log("index", index)
+                      console.log("index-1", index+1)
+                      item_swap(todo.items,index,index+1 )
+                     }
+                  return todo
+              },
+            ),
+          };
     case 'CHANGE_VISIBILITY':
       return {
         ...state,

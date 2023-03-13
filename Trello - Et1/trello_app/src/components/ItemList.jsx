@@ -24,7 +24,7 @@ const ItemList = props =>{
       {/* {movies.map(movie=> <Movie  key={movie.id} movie="{Movie}"/>)} */}
       {/* {movies} */}
       {/* {movies.map(movie => <div key={movie.id}>  {movie.id} </div>)} funciona */}
-      {todos.map(todo => <div key={todo.id}> </div> )}
+      {todos.map(todo => <div key={todo.id}>  asdfasdf a</div> )}
       {/* {movies.map(movie => <Movie movie={movie} /> )}    */}
   </div>
 

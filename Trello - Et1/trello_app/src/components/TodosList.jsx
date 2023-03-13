@@ -1,8 +1,10 @@
 import React from 'react'
 import { connect } from 'react-redux';
 import './TodoList.css';
-import ItemList from "./ItemList.jsx";
-import { deleteTodoAction, toggleCompleteAction, createItemAction,deleteItemAction, toggleCompleteItemAction } from '../services/redux/actions';
+import { FaArrowAltCircleUp, FaArrowAltCircleDown } from 'react-icons/fa';
+// import ItemList from "./ItemList.jsx";
+import { deleteTodoAction, toggleCompleteAction, createItemAction,deleteItemAction, toggleCompleteItemAction,
+            toggleItemUpAction,toggleItemDownAction } from '../services/redux/actions';
 
 function filterTodos(todos = [], filter) {
   console.log(filter);
@@ -27,28 +29,32 @@ function filterTodos(todos = [], filter) {
 
 function items(items = [], props,todoid) {
    console.log(items);
-
-      {/* reptiles.map((reptile) => <li>{reptile}</li>); */}
-      // items.map((item) => {item})
-       {/* {todo.items.map(item => (
-                  <div key={item.id}>
-                      <p>{item.text}</p>
-                  </div>
-                ))} */}
-
     return items.map((item) => 
-          <div className='itemList'>
-            {item.textItem}
-          
-            <div className='actions'>
-              <button
+          <div className='itemListData'>
+            
+            <div className='itemHeader'>
+             <h5>Item: {item.textItem} </h5>
+            </div>
+           
+            <div className='itemListActions'>
+              <button className='itemListActionCompontent'
                 onClick={() => props.toggleItemCompleted(item.idItem,todoid)}
               >
                 {!item.itemState ? ' complete' : '✔️ uncomplete'}
               </button>
-              <button onClick={() => props.deleteItem(item.idItem,todoid)}>
+
+              <button className='itemListActionCompontent' onClick={() => props.deleteItem(item.idItem,todoid)}>
                 {'❌ delete'}
               </button>
+              
+              <button className='itemListActionCompontent' onClick={() => props.toggleItemUp(item.idItem,todoid)}>
+               <FaArrowAltCircleUp/> {' up'}
+              </button>
+
+              <button className='itemListActionCompontent' onClick={() => props.toggleItemDown(item.idItem,todoid)}>
+              <FaArrowAltCircleDown/> {'  down'}
+              </button>         
+              
             </div>
           
           </div>
@@ -82,7 +88,23 @@ function TodoList(props) {
             }`}
             key={todo.id}
           >
-          <div className="Controlitems">
+ 
+
+          <div className='TodoHeader'>
+              <div className='text'>{todo.text}</div>
+
+              <div className='actions'>
+              {/* <button
+                onClick={() => props.toggleCompleted(todo.id)}
+              >
+                {!todo.completed ? ' complete' : '✔️ uncomplete'}
+              </button> */}
+              <button onClick={() => props.delete(todo.id)}>
+                {'❌ delete '}
+              </button>
+            </div>
+            
+              <div className="Controlitems">
                 <div className='controls'>
                   <input 
                     type='text'
@@ -96,33 +118,17 @@ function TodoList(props) {
                   
                 </div>
 
-    
-
                 <div className="itemlist">
                 {items(todo.items,props,todo.id)}
-                {/* {todo.items.map(item => (
-                  <div key={item.id}>
-                      <p>{item.text}</p>
-                  </div>
-                ))} */}
+  
                 </div>  
 
 
             </div>
 
-            <div className='data'>
-              <div className='text'>{todo.text}</div>
             </div>
-            <div className='actions'>
-              <button
-                onClick={() => props.toggleCompleted(todo.id)}
-              >
-                {!todo.completed ? ' complete' : '✔️ uncomplete'}
-              </button>
-              <button onClick={() => props.delete(todo.id)}>
-                {'❌ delete '}
-              </button>
-            </div>
+
+
           </div>
         ))}
       </div>
@@ -140,8 +146,9 @@ const mapDispatchToProps = (dispatch) => ({
   delete: (id) => deleteTodoAction(dispatch, id),
   createItem : (id,text) => createItemAction(dispatch, id, text),
   deleteItem: (id, todoid) => deleteItemAction(dispatch, id, todoid),
-  toggleItemCompleted: (todoid)=> toggleCompleteItemAction(dispatch,todoid),
-
+  toggleItemCompleted: (id,todoid) => toggleCompleteItemAction(dispatch, id, todoid),
+  toggleItemUp: (id, todoid) => toggleItemUpAction(dispatch, id, todoid),
+  toggleItemDown: (id, todoid) => toggleItemDownAction(dispatch, id, todoid),
 });
 
 const connected = connect(
