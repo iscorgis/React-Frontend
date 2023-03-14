@@ -2,7 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux';
 import './TodoList.css';
 import { FaArrowAltCircleUp, FaArrowAltCircleDown } from 'react-icons/fa';
-// import ItemList from "./ItemList.jsx";
+
 import { deleteTodoAction, toggleCompleteAction, createItemAction,deleteItemAction, toggleCompleteItemAction,
             toggleItemUpAction,toggleItemDownAction } from '../services/redux/actions';
 
@@ -32,13 +32,18 @@ function items(items = [], props,todoid) {
     return items.map((item) => 
           <div className='itemListData'>
             
-            <div className='itemHeader'>
+            <div className={`itemHeader${
+                item.itemState ? 'completed' : 'uncompleted'
+                }`}>
              <h5>Item: {item.textItem} </h5>
             </div>
            
             <div className='itemListActions'>
-              <button className='itemListActionCompontent'
+              <button className={`itemListActionCompontent${
+                item.itemState ? 'completed' : 'uncompleted'
+                }`}
                 onClick={() => props.toggleItemCompleted(item.idItem,todoid)}
+                
               >
                 {!item.itemState ? ' complete' : '✔️ uncomplete'}
               </button>

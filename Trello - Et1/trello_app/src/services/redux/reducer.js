@@ -2,20 +2,20 @@ const initialState = {
   visibility: 'ALL',
   todos: [
     {
-      text: 'tarea demo 1',
+      text: 'Lista demo 1',
       id: 1,
       completed: false,
       // items: [{idItem:1,textItem:'item demo 1', itemState: 'complete'},{idItem:2,textItem:'item demo 2',itemState: 'complete'}],
       items: [{idItem:1,textItem:'item demo 1', itemState: true},{idItem:2,textItem:'item demo 2',itemState: true}],
     },
     {
-      text: 'tarea demo 2',
+      text: 'Lista demo 2',
       id: 2,
       completed: false,
       items: [],
     },
     {
-      text: 'tarea demo 3',
+      text: 'Lista demo 3',
       id: 3,
       completed: false,
       items: [],
@@ -79,6 +79,7 @@ function reducer(state = initialState, action) {
             text: action.payload,
             completed: action.completed || false,
             id: action.id,
+            items: [],
           },
         ],
       };
@@ -100,8 +101,8 @@ function reducer(state = initialState, action) {
             console.log('item id',action.id)
            
                  if (todo.id === action.todoid) {
-                  const index = todo.items.indexOf(action.id);
-                  todo.items.splice(index,1);
+                   const index = todo.items.indexOf(action.id);
+                   todo.items.splice(index,1);
                  }
               return todo
           },
@@ -125,14 +126,7 @@ function reducer(state = initialState, action) {
           todos: state.todos.map(
             (todo) => {             
                    if (todo.id === action.todoid) {
-                    console.log('todoId',todo.id )
-                    console.log('action todo id',action.todoid )
-                    console.log('payload',action.payload )
-                    console.log('item id',action.id)
-                    const index = todo.items.indexOf(action.todoid);
-                    console.log('index #########' , index)
-                    console.log('value of itemstate', todo.items[index].itemState)
-                    // todo.items[0].itemState = !todo.items[0].itemState
+                     todo.items[0].itemState = !todo.items[0].itemState     
                    }
                 return todo
             },
