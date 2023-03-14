@@ -129,14 +129,14 @@
     flex: 0 50%;
     height: 25px;
     margin-bottom: 2%; /* (100-32*3)/2 */
-    
+    opacity: 0.3;
 }
 
 .itemListActionCompontentuncompleted{
     flex: 0 50%;
     height: 25px;
     margin-bottom: 2%; /* (100-32*3)/2 */
-    opacity: 0.3;
+    
 }
 
 

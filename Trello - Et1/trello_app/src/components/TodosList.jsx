@@ -45,7 +45,7 @@ function items(items = [], props,todoid) {
                 onClick={() => props.toggleItemCompleted(item.idItem,todoid)}
                 
               >
-                {!item.itemState ? ' complete' : '✔️ uncomplete'}
+                {!item.itemState ? '✔️ complete' : ' uncomplete'}
               </button>
 
               <button className='itemListActionCompontent' onClick={() => props.deleteItem(item.idItem,todoid)}>

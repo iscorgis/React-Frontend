@@ -6,7 +6,7 @@ const initialState = {
       id: 1,
       completed: false,
       // items: [{idItem:1,textItem:'item demo 1', itemState: 'complete'},{idItem:2,textItem:'item demo 2',itemState: 'complete'}],
-      items: [{idItem:1,textItem:'item demo 1', itemState: true},{idItem:2,textItem:'item demo 2',itemState: true}],
+      items: [{idItem:1,textItem:'item demo 1', itemState: false},{idItem:2,textItem:'item demo 2',itemState: false}],
     },
     {
       text: 'Lista demo 2',
@@ -25,9 +25,6 @@ const initialState = {
 
 
 function item_swap(arr, old_index, new_index) {
-  console.log("array len", arr.length)
-  console.log("old_index", old_index)
-  console.log("new_index", new_index)
   while (old_index < 0) {
       old_index += arr.length;
   }
@@ -46,24 +43,16 @@ function item_swap(arr, old_index, new_index) {
 
 
 function reducer(state = initialState, action) {
-  console.log('main reducer. action:', action);
+  // console.log('main reducer. action:', action);
 
   switch (action.type) {
     case 'ADD_ITEM':
-      // type: 'ADD_ITEM',
-      // idItem : Date.now(),
-      // text : text,
-      // payload: id
-      console.log('main reducer ADD_ITEM. action:', action);
       return {
         ...state,
         todos: state.todos.map(
           (todo) => {
-            console.log('todoId',todo.id )
-            console.log('payload',action.payload )
-           
                  if (todo.id === action.payload) {
-                  todo.items.push({idItem:action.idItem,textItem:action.text,itemState:'False'});
+                  todo.items.push({idItem:action.idItem,textItem:action.text,itemState:false});
                  }
               return todo
           },
@@ -95,14 +84,12 @@ function reducer(state = initialState, action) {
         ...state,
         todos: state.todos.map(
           (todo) => {
-            console.log('todoId',todo.id )
-            console.log('action todo id',action.todoid )
-            console.log('payload',action.payload )
-            console.log('item id',action.id)
-           
+
                  if (todo.id === action.todoid) {
-                   const index = todo.items.indexOf(action.id);
-                   todo.items.splice(index,1);
+                  const idx = todo.items.findIndex(({ idItem }) => idItem === action.payload);
+                  if (idx >= 0 ){ 
+                    todo.items.splice(idx,1);
+                  }
                  }
               return todo
           },
@@ -126,7 +113,10 @@ function reducer(state = initialState, action) {
           todos: state.todos.map(
             (todo) => {             
                    if (todo.id === action.todoid) {
-                     todo.items[0].itemState = !todo.items[0].itemState     
+                    const idx = todo.items.findIndex(({ idItem }) => idItem === action.payload);
+                    if (idx >= 0 ){                     
+                      todo.items[idx].itemState = !todo.items[idx].itemState 
+                    }    
                    }
                 return todo
             },
@@ -138,17 +128,8 @@ function reducer(state = initialState, action) {
           todos: state.todos.map(
             (todo) => {             
                    if (todo.id === action.todoid) {
-                    const index = todo.items.indexOf(action.id);
-                    // todo.items.splice(index,1);
-                    console.log('todoId',todo.id )
-                    console.log('action todo id',action.todoid )
-                    console.log('payload',action.payload )
-                    console.log('item id',action.id)
-                    console.log("todo", todo.id)
-                    console.log("todolength", todo.items.length)
-                    console.log("index", index)
-                    console.log("index-1", index-1)
-                    item_swap(todo.items,index,index-1 )
+                    const idx = todo.items.findIndex(({ idItem }) => idItem === action.payload);
+                    item_swap(todo.items,idx,idx-1 )
                    }
                 return todo
             },
@@ -160,13 +141,8 @@ function reducer(state = initialState, action) {
             todos: state.todos.map(
               (todo) => {             
                      if (todo.id === action.todoid) {
-                      const index = todo.items.indexOf(action.id);
-                      // todo.items.splice(index,1);
-                      console.log("ITEM DOWN  ", todo.id)
-                      console.log("todolength", todo.items.length)
-                      console.log("index", index)
-                      console.log("index-1", index+1)
-                      item_swap(todo.items,index,index+1 )
+                      const idx = todo.items.findIndex(({ idItem }) => idItem === action.payload);
+                      item_swap(todo.items,idx,idx+1 )
                      }
                   return todo
               },
