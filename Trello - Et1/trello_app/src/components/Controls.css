@@ -1,11 +1,12 @@
 .controls {
     background: #444;
     color: white;
-    padding: 2em;
+    padding: 1em;
     display: flex;
     flex-direction: row;
     justify-content: center;
     flex-wrap: wrap;
+    max-height: 2.5cm;
 }
 .controls input {
     all:unset;
@@ -16,7 +17,7 @@
     all:unset;
     padding: 1em;
     color: white;
-    background: #222;
+    background: rgb(180, 80, 80);
     cursor: pointer;
     min-width: 110px;
     text-align: center;

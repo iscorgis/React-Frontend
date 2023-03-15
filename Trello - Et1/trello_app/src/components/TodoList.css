@@ -4,6 +4,21 @@
     justify-content: center;
     align-items: stretch;
 }
+
+.flexTodoList {
+    display: flex;
+    /* flex-direction: column; */
+    flex-flow: row wrap;
+    align-content: space-between;
+    justify-content: center;
+    align-items: stretch;
+    justify-content: left;
+    background-color: gainsboro;
+    padding: 10px;
+    border:2px solid black;
+
+}
+
 .todo {
     background-color: wheat;
     padding: 1em;
@@ -53,3 +68,79 @@
     background-color: burlywood;
 
 }
+
+*{
+    box-sizing: border-box;
+}
+
+.flex-container{
+    display:flex;
+    height: 400px;
+    align-content: space-between;
+    /* align-items: flex-start; */
+    /* flex-direction: row;
+    flex-wrap: wrap; */
+    flex-flow: row wrap;
+    justify-content: left;
+    background-color: burlywood;
+    padding: 10px;
+    border:2px solid black;
+    /* flex-shrink: initial; */
+    /* flex-grow: ; */
+}
+
+.flex-container div{
+    background-color: gainsboro;
+    width: 100px;
+    margin: 10px;
+    text-align: center;
+    line-height: 75px;
+    font-size: 30px;
+    border: 2px solid black;
+
+}
+
+.itemListData{
+    background: rgba(68, 68, 68, 0.541);
+    color: white;
+    padding: 0.2cm;
+    margin-top: 3%;
+    /* display: flex;
+    flex-direction: row;
+    justify-content: center;
+    flex-wrap: wrap;
+    max-height: 2.5cm; */
+}
+
+.itemListActions{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.itemListActionCompontent{
+    flex: 0 50%;
+    height: 25px;
+    margin-bottom: 2%; /* (100-32*3)/2 */
+}
+
+
+.itemListActionCompontentcompleted{
+    flex: 0 50%;
+    height: 25px;
+    margin-bottom: 2%; /* (100-32*3)/2 */
+    opacity: 0.3;
+}
+
+.itemListActionCompontentuncompleted{
+    flex: 0 50%;
+    height: 25px;
+    margin-bottom: 2%; /* (100-32*3)/2 */
+    
+}
+
+
+.itemHeadercompleted{
+    text-decoration: line-through;
+}
+

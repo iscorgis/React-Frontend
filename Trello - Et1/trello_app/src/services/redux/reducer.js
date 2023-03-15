@@ -2,70 +2,57 @@ const initialState = {
   visibility: 'ALL',
   todos: [
     {
-      text: 'tarea demo 1',
+      text: 'Lista demo 1',
       id: 1,
-      completed: true,
-      items: [{idItem:1,textItem:'item demo 1', itemState: 'uncompleted'},{idItem:2,textItem:'item demo 2',itemState: 'uncompleted'}],
+      completed: false,
+      // items: [{idItem:1,textItem:'item demo 1', itemState: 'complete'},{idItem:2,textItem:'item demo 2',itemState: 'complete'}],
+      items: [{idItem:1,textItem:'item demo 1', itemState: false},{idItem:2,textItem:'item demo 2',itemState: false}],
     },
     {
-      text: 'tarea demo 2',
+      text: 'Lista demo 2',
       id: 2,
       completed: false,
       items: [],
     },
     {
-      text: 'tarea demo 3',
+      text: 'Lista demo 3',
       id: 3,
-      completed: true,
+      completed: false,
       items: [],
     },
   ],
 };
 
 
-// function swapElement(array, indexA, moveType) {
-//   var len       = array.length;
-//   // var current   = array[i];
-//   // var previous  = array[(i+len-1)%len];
-//   // var next      = array[(i+1)%len];
+function item_swap(arr, old_index, new_index) {
+  while (old_index < 0) {
+      old_index += arr.length;
+  }
+  while (new_index < 0) {
+      new_index += arr.length;
+  }
+  if (new_index >= arr.length) {
+      var k = new_index - arr.length + 1;
+      while (k--) {
+          arr.push(undefined);
+      }
+  }
+  arr.splice(new_index, 0, arr.splice(old_index, 1)[0]);
 
-//   if (moveType == "pre") {
-//     var tmp = array[indexA];
-    
-//     array[indexA] = array[(i+len-1)%len];
-//     array[indexB] = tmp;
-//   }
-
-//   if (moveType == "post") {
-//     var tmp = array[indexA];
-    
-//     array[indexA] = array[(i+1)%len];
-//     array[indexB] = tmp;
-//   }
-
-
-// }
+};
 
 
 function reducer(state = initialState, action) {
-  console.log('main reducer. action:', action);
+  // console.log('main reducer. action:', action);
 
   switch (action.type) {
     case 'ADD_ITEM':
-      // type: 'ADD_ITEM',
-      // idItem : Date.now(),
-      // text : text,
-      // payload: id
-      console.log('main reducer ADD_ITEM. action:', action);
       return {
         ...state,
         todos: state.todos.map(
           (todo) => {
-            console.log('todoId',todo.id )
-            console.log('payload',action.payload )
-           
                  if (todo.id === action.payload) {
-                  todo.items.push({idItem:action.idItem,textItem:action.text});
+                  todo.items.push({idItem:action.idItem,textItem:action.text,itemState:false});
                  }
               return todo
           },
@@ -81,6 +68,7 @@ function reducer(state = initialState, action) {
             text: action.payload,
             completed: action.completed || false,
             id: action.id,
+            items: [],
           },
         ],
       };
@@ -96,14 +84,12 @@ function reducer(state = initialState, action) {
         ...state,
         todos: state.todos.map(
           (todo) => {
-            console.log('todoId',todo.id )
-            console.log('action todo id',action.todoid )
-            console.log('payload',action.payload )
-            console.log('item id',action.id)
-           
+
                  if (todo.id === action.todoid) {
-                  const index = todo.items.indexOf(action.id);
-                  todo.items.splice(index,1);
+                  const idx = todo.items.findIndex(({ idItem }) => idItem === action.payload);
+                  if (idx >= 0 ){ 
+                    todo.items.splice(idx,1);
+                  }
                  }
               return todo
           },
@@ -121,6 +107,47 @@ function reducer(state = initialState, action) {
           },
         ),
       };
+      case 'TOGGLE_COMPLETEDITEM_TODO':
+        return {
+          ...state,
+          todos: state.todos.map(
+            (todo) => {             
+                   if (todo.id === action.todoid) {
+                    const idx = todo.items.findIndex(({ idItem }) => idItem === action.payload);
+                    if (idx >= 0 ){                     
+                      todo.items[idx].itemState = !todo.items[idx].itemState 
+                    }    
+                   }
+                return todo
+            },
+          ),
+        };
+      case 'TOGGLE_UPITEM':
+        return {
+          ...state,
+          todos: state.todos.map(
+            (todo) => {             
+                   if (todo.id === action.todoid) {
+                    const idx = todo.items.findIndex(({ idItem }) => idItem === action.payload);
+                    item_swap(todo.items,idx,idx-1 )
+                   }
+                return todo
+            },
+          ),
+        };
+        case 'TOGGLE_DOWNITEM':
+          return {
+            ...state,
+            todos: state.todos.map(
+              (todo) => {             
+                     if (todo.id === action.todoid) {
+                      const idx = todo.items.findIndex(({ idItem }) => idItem === action.payload);
+                      item_swap(todo.items,idx,idx+1 )
+                     }
+                  return todo
+              },
+            ),
+          };
     case 'CHANGE_VISIBILITY':
       return {
         ...state,
