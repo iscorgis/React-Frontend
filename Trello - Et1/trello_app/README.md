@@ -1,3 +1,11 @@
+
+
+
+[Main](https://i.ibb.co/n6nDp9q/list-1.png)
+
+The app developed with react in vscode try to solve the exercise of the geekshub react frontend course. The app it's a light trello version and it let the user to create List and item's inside this list. Futhermore the user can delete itemas and list and manage the item status (completed / uncompleted ) and the order/priority with the up/down buttons.
+
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
